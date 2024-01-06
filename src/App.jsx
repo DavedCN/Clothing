@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HomePage } from "./component/homepage";
+import { HomePage } from "./pages/homepage/homepage";
 
 function App() {
   return (
