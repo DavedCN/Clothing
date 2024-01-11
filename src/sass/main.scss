@@ -1,6 +1,14 @@
 @import "menu-item";
 @import "directory";
 @import "app";
+@import "collection-preview";
+@import "collection-item";
+@import "header";
+
+.shop-logo {
+  width: 200px;
+  height: 200px;
+}
 
 .homepage {
   display: flex;
