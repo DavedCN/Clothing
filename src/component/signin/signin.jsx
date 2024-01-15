@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { FormInput } from "../form-input/form-input";
 import { CustomButton } from "../custom-button/custom-button";
 
+import { signInWithGoogle } from "../../firebase/firebase.utils";
+
 export class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,6 @@ export class SignIn extends Component {
   };
 
   handleChange = (e) => {
-    console.log(e.target);
     const { name, value } = e.target;
 
     this.setState({
@@ -54,8 +55,12 @@ export class SignIn extends Component {
             type="password"
             label="Password"
           />
-
-          <CustomButton type="submit">SIGN IN</CustomButton>
+         
+            <CustomButton type="submit">SIGN IN</CustomButton>
+            <CustomButton onClick={signInWithGoogle} isGoogleSIgnIn>
+              SIGN IN WITH GOOGLE
+            </CustomButton>
+        
         </form>
       </div>
     );
