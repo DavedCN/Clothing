@@ -5,6 +5,8 @@ import { CustomButton } from "../custom-button/custom-button";
 
 import { signInWithGoogle } from "../../firebase/firebase.utils";
 
+import { Link } from "react-router-dom";
+
 export class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -62,10 +64,14 @@ export class SignIn extends Component {
             SIGN IN WITH GOOGLE
           </CustomButton>
         </form>
+
+        <Link className="acct" to="/signup">
+          Don't have an account yet?{" "}
+          <span className="acctSignIn"> SIGN UP </span>
+        </Link>
       </div>
     );
   }
 }
 
 export default SignIn;
-                                  

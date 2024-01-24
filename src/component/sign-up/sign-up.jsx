@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
+import { Link } from "react-router-dom";
 
 import {
   auth,
@@ -18,6 +19,7 @@ export class SignUp extends Component {
       email: "",
       password: "",
       confirmPassword: "",
+      signValue: null,
     };
   }
 
@@ -32,24 +34,7 @@ export class SignUp extends Component {
     }
 
     try {
-      //   const checkin = await auth
-      //     .createUserWithEmailAndPassword(auth, email, password)
-      //     .then((userCredential) => {
-      //       // User created
-      //       const user = userCredential.user;
-      //       console.log(user);
-      //     })
-      //     .catch((error) => {
-      //       // Handle error
-      //       console.error(error.code, error.message);
-      //     });
-
-      //   console.log(checkin);
       const { user } = await createWithEmailAndPassword(auth, email, password);
-
-      console.log(user);
-
-      await createUserProfileDocument(user, { displayName });
 
       this.setState({
         displayName: "",
@@ -69,7 +54,7 @@ export class SignUp extends Component {
 
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
-    let signValue = null;
+
     return (
       <div className="sign-up">
         <h1 className="title">SIGN UP</h1>
@@ -111,14 +96,9 @@ export class SignUp extends Component {
           <CustomButton type="submit">SIGN UP</CustomButton>
         </form>
 
-        <div
-          onClick={() => {
-            signValue = true;
-            console.log(signValue);
-          }}
-        >
-          Already have an account? <span>Sign In</span>
-        </div>
+        <Link className="acct" to="/signin">
+          Already have an account? <span className="acctSignIn">SIGN IN</span>
+        </Link>
       </div>
     );
   }

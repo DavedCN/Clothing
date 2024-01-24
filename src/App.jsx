@@ -18,6 +18,7 @@ import { onSnapshot } from "firebase/firestore";
 import { auth } from "./firebase/firebase.utils";
 import { createUserProfileDocument } from "./firebase/firebase.utils";
 import { onAuthStateChanged } from "firebase/auth";
+import SignIn from "./component/signin/signin";
 
 ///////////////////////////////////////////
 
@@ -79,7 +80,8 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
-          <Route path="/signin" element={<SignInAndSignUpPage />} />
+          <Route path="/signup" element={<SignInAndSignUpPage />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </div>
     );
