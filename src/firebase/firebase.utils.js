@@ -1,6 +1,5 @@
-// import firebase, { initializeApp } from "../../node_modules/firebase/app/dist/app";
+//GOOGLE AUTHENTICATION WITH FIREBASE
 
-import "firebase/firestore";
 import "firebase/auth";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -14,9 +13,7 @@ const config = {
   messagingSenderId: "869927156699",
   appId: "1:869927156699:web:8da24c6ded009a0703c5fe",
 };
-initializeApp(config);
-
-// export const firestore = firebase.firestore();
+const app = initializeApp(config);
 
 const provider = new GoogleAuthProvider();
 
@@ -44,3 +41,37 @@ export const signInWithGoogle = () =>
     });
 
 export default signInWithGoogle;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// STORAGE USING FIREBASE FIRESTORE
+
+import { getFirestore } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
+// GOOGLE AUTHENTICATION STORAGE
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+
+  const userRef = doc(db, "users", userAuth.uid);
+
+  const snapShot = await getDoc(userRef);
+
+  if (!snapShot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    const info = { displayName, email, createdAt, ...additionalData };
+
+    try {
+      await setDoc(userRef, info);
+    } catch (error) {
+      console.log(`Error Creating new user`, error.message);
+    }
+  }
+
+  return userRef;
+};
