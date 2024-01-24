@@ -2,7 +2,12 @@
 
 import "firebase/auth";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 const config = {
@@ -17,7 +22,7 @@ const app = initializeApp(config);
 
 const provider = new GoogleAuthProvider();
 
-export const auth = getAuth();
+export const auth = getAuth(app);
 export const signInWithGoogle = () =>
   signInWithPopup(auth, provider)
     .then((result) => {
@@ -42,6 +47,22 @@ export const signInWithGoogle = () =>
 
 export default signInWithGoogle;
 
+//SIGN IN WITH EMAIL AND PASSWORD
+
+export const createWithEmailAndPassword = async (auth, email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // User created
+      const user = userCredential.user;
+      console.log(user);
+      return user;
+    })
+    .catch((error) => {
+      // Handle error
+      console.error(error.code, error.message);
+      throw error;
+    });
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // STORAGE USING FIREBASE FIRESTORE

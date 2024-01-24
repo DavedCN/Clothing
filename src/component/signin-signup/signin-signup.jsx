@@ -3,12 +3,12 @@ import React from "react";
 import { SignIn } from "../signin/signin";
 import { SignUp } from "../sign-up/sign-up";
 
-export const SignInAndSignUpPage = () => {
+export const SignInAndSignUpPage = ({ signValue }) => {
   return (
     <div className="sign-in-and-sign-up">
-      <h1>Sign In and Sign Up</h1>
       <SignIn />
-      <SignUp />
+
+      {/* {signValue ? <SignIn /> : <SignUp />} */}
     </div>
   );
 };
