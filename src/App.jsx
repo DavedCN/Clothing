@@ -58,7 +58,12 @@ class App extends Component {
 
         // Listen for real-time updates to the user document in Firestore using onSnapshot
         onSnapshot(userRef, (snapShot) => {
-          const userData = { id: snapShot.id, ...snapShot.data() };
+          const userData = {
+            id: snapShot.id,
+            ...snapShot.data(),
+          };
+          console.log(userData);
+
           this.setState({ currentUser: userData });
         });
 

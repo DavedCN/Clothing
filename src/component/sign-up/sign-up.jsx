@@ -19,7 +19,6 @@ export class SignUp extends Component {
       email: "",
       password: "",
       confirmPassword: "",
-      signValue: null,
     };
   }
 
@@ -35,6 +34,7 @@ export class SignUp extends Component {
 
     try {
       const { user } = await createWithEmailAndPassword(auth, email, password);
+      console.log(user);
 
       this.setState({
         displayName: "",
@@ -93,7 +93,9 @@ export class SignUp extends Component {
             onChange={this.handleChange}
             label="Confirm Password"
           />
-          <CustomButton type="submit">SIGN UP</CustomButton>
+          <CustomButton onClick={console.log(this.state)} type="submit">
+            SIGN UP
+          </CustomButton>
         </form>
 
         <Link className="acct" to="/signin">
