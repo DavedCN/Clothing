@@ -60,7 +60,7 @@ export class SignIn extends Component {
           />
 
           <CustomButton type="submit">SIGN IN</CustomButton>
-          <CustomButton onClick={signInWithGoogle} isGoogleSIgnIn>
+          <CustomButton type="button" onClick={signInWithGoogle} isGoogleSIgnIn>
             SIGN IN WITH GOOGLE
           </CustomButton>
         </form>

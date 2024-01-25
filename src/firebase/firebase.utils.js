@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
@@ -49,12 +50,22 @@ export default signInWithGoogle;
 
 //SIGN IN WITH EMAIL AND PASSWORD
 
-export const createWithEmailAndPassword = async (auth, email, password) => {
-  return createUserWithEmailAndPassword(auth, email, password)
+export const createWithEmailAndPassword = async (
+  userAuth,
+  email,
+  password,
+  displayName
+) => {
+  return createUserWithEmailAndPassword(userAuth, email, password, displayName)
     .then((userCredential) => {
       // User created
       const user = userCredential.user;
-      console.log(user);
+
+      // Set the display name for the newly created user
+      updateProfile(user, {
+        displayName: displayName,
+      });
+
       return user;
     })
     .catch((error) => {
