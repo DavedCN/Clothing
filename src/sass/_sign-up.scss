@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
 
-
   .title {
     margin: 10px 0;
   }
@@ -11,12 +10,16 @@
 .acct {
   color: grey;
 
-
   .acctSignIn {
     cursor: pointer;
+    font-weight: 900;
+    margin-left: 5px;
 
     &:hover {
       color: black;
     }
   }
 }
+
+
+

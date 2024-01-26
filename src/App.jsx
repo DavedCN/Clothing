@@ -20,27 +20,22 @@ import { auth } from "./firebase/firebase.utils";
 import { createUserProfileDocument } from "./firebase/firebase.utils";
 import { onAuthStateChanged } from "firebase/auth";
 
+//IMPORT REDUX
+import { connect } from "react-redux";
+import { setCurrentUser } from "./redux/userAction";
+
 ///////////////////////////////////////////
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: null,
-    };
-  }
-
-  unsubcribeFromAuth = null;
-
+  unsubscribeFromAuth = null;
 
   componentDidMount() {
+    const { setCurrentUser } = this.props;
     // Set up the authentication state change listener using onAuthStateChanged
     this.unsubscribeFromAuth = onAuthStateChanged(auth, async (userAuth) => {
       if (userAuth) {
         // If the user is authenticated, get the reference to the user document in Firestore
         const userRef = await createUserProfileDocument(userAuth);
-        console.log("This is userAuth", userAuth);
 
         // Set the currentUser state to the user document data
         // Listen for real-time updates to the user document in Firestore using onSnapshot
@@ -49,14 +44,11 @@ class App extends Component {
             id: snapShot.id,
             ...snapShot.data(),
           };
-          console.log("this is user data", userData);
 
-          this.setState({ currentUser: userData });
+          setCurrentUser(userData);
         });
-
-        console.log("This is current app state", this.state);
       } else {
-        this.setState({ currentUser: null }); // Handle user logout state by setting currentUser to null
+        setCurrentUser(null); // Handle user logout state by setting currentUser to null
       }
     });
   }
@@ -68,7 +60,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
@@ -80,4 +72,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);

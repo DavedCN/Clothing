@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 import { Logo } from "../../assets/crown";
 import { auth } from "../../firebase/firebase.utils";
 
+//REDUX
+
+import { connect } from "react-redux";
+
 export const Header = ({ currentUser }) => {
+  console.log(currentUser);
+  
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -41,4 +47,6 @@ export const Header = ({ currentUser }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({ currentUser: state.user.currentUser });
+
+export default connect(mapStateToProps)(Header);
