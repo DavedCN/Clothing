@@ -6,11 +6,25 @@ import { auth } from "../../firebase/firebase.utils";
 
 //REDUX
 
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-export const Header = ({ currentUser }) => {
-  console.log(currentUser);
-  
+//IMPORT TOAST
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
+
+export const Header = () => {
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  //Notifications
+
+  const signOutNotify = () => {
+    enqueueSnackbar(`Sign Out Successful!`, {
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+      },
+    });
+  };
+
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -33,6 +47,7 @@ export const Header = ({ currentUser }) => {
             className="option"
             onClick={() => {
               auth.signOut();
+              signOutNotify();
             }}
           >
             SIGN OUT
@@ -42,11 +57,10 @@ export const Header = ({ currentUser }) => {
             SIGN IN
           </Link>
         )}
+        <SnackbarProvider />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({ currentUser: state.user.currentUser });
-
-export default connect(mapStateToProps)(Header);
+export default Header;

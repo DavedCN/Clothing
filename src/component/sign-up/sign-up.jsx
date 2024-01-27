@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 import {
   auth,
-  createUserProfileDocument,
   createWithEmailAndPassword,
 } from "../../firebase/firebase.utils";
 
