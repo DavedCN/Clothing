@@ -1,7 +1,6 @@
 //REACT IMPORTS
 
-import React from "react";
-import { Component } from "react";
+import React, { Component } from "react";
 
 //REACT ROUTER DOM IMPORTS
 
@@ -22,7 +21,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 //IMPORT REDUX
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/userAction";
+import { setCurrentUser } from "./redux/user/userAction";
 
 //IMPORT NOTISTACK
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
@@ -47,8 +46,6 @@ class App extends Component {
           },
         }
       );
-
-   
     };
 
     // Set up the authentication state change listener using onAuthStateChanged
@@ -100,7 +97,6 @@ class App extends Component {
           <Route path="/signin" element={<SignIn />} />
         </Routes>
         <SnackbarProvider />
-    
       </div>
     );
   }

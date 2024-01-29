@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//FIREBASE
+
 import { Logo } from "../../assets/crown";
 import { auth } from "../../firebase/firebase.utils";
+
+//COMPONENTS
+import { CartIcon } from "../cart-icon/cart-icon";
+import { CartDropdown } from "../cartdropdown/cartdropdown";
 
 //REDUX
 
@@ -12,7 +18,8 @@ import { useSelector } from "react-redux";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 export const Header = () => {
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const { currentUser } = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
 
   //Notifications
 
@@ -57,8 +64,10 @@ export const Header = () => {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
         <SnackbarProvider />
       </div>
+      {cart.hidden ? null : <CartDropdown />}
     </div>
   );
 };
