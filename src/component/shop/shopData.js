@@ -246,4 +246,4 @@ export const collection = [
   },
 ];
 
-export default collection;
+
