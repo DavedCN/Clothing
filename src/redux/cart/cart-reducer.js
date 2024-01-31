@@ -14,11 +14,11 @@ export const cartReducer = (state = INITIAL_STATE, action) => {
         hidden: !state.hidden,
       };
 
-      case cartActionTypes.ADD_ITEM:
+    case cartActionTypes.ADD_ITEM:
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload],
-      }
+        cartItems: addItem(state.cartItems, action.payload),
+      };
 
     default:
       return state;
