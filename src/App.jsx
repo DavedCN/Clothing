@@ -11,7 +11,6 @@ import { HomePage } from "./pages/homepage/homepage";
 import { ShopPage } from "./component/shop/shopPage";
 import { Header } from "./component/header/header";
 import { SignInAndSignUpPage } from "./component/signin-signup/signin-signup";
-import SignIn from "./component/signin/signin";
 
 //IMPORTS FROM FIREBASE
 import { onSnapshot } from "firebase/firestore";
@@ -90,11 +89,6 @@ class App extends Component {
               currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />
             }
           />
-          <Route
-            path="/signin"
-            element={currentUser ? <Navigate to="/" /> : <SignIn />}
-          />
-          <Route path="/signin" element={<SignIn />} />
         </Routes>
         <SnackbarProvider />
       </div>
@@ -103,7 +97,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("this is the state", state);
   return {
     currentUser: state.user.currentUser,
   };

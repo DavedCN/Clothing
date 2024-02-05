@@ -1,31 +1,33 @@
-import React, { Component } from "react";
-
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
-import { Link } from "react-router-dom";
-
+import { displaySignup } from "../../redux/signin/up/signAction";
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 import {
   auth,
   createWithEmailAndPassword,
 } from "../../firebase/firebase.utils";
 
-export class SignUp extends Component {
-  constructor() {
-    super();
+export const SignUp = () => {
+  const [userCredentials, setUserCredentials] = useState({
+    displayName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    this.state = {
-      displayName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
-  }
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
-  handleSubmit = async (event) => {
+  const dispatch = useDispatch();
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { displayName, email, password, confirmPassword } = this.state;
-    console.log("this is the state", this.state);
 
     if (password !== confirmPassword) {
       alert("Passwords don't match");
@@ -40,7 +42,7 @@ export class SignUp extends Component {
         displayName
       );
 
-      this.setState({
+      setUserCredentials({
         displayName: "",
         email: "",
         password: "",
@@ -51,65 +53,57 @@ export class SignUp extends Component {
     }
   };
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
-
-  render() {
-    const { displayName, email, password, confirmPassword } = this.state;
-
-    return (
-      <div className="sign-up">
-        <h1 className="title">CREATE AN ACCOUNT</h1>
-        <h2 className="title">I do not have an account</h2>
-        <span>Sign up with your email and password</span>
-
-        <form className="sign-up-form" onSubmit={this.handleSubmit}>
-          <FormInput
-            type="text"
-            name="displayName"
-            value={displayName}
-            onChange={this.handleChange}
-            label="Display Name"
-            required
-          />
-
-          <FormInput
-            type="email"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            label="Email"
-            required
-          />
-
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-            label="Password"
-            required
-          />
-
-          <FormInput
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={this.handleChange}
-            label="Confirm Password"
-            required
-          />
-          <CustomButton type="submit">SIGN UP</CustomButton>
-        </form>
-
-        <Link className="acct" to="/signin">
-          Already have an account? <span className="acctSignIn">SIGN IN</span>
-        </Link>
+  return (
+    <div className="sign-up">
+      <h1 className="title">CREATE AN ACCOUNT</h1>
+      <h2 className="title">I do not have an account</h2>
+      <span>Sign up with your email and password</span>
+      <form className="sign-up-form" onSubmit={handleSubmit}>
+        <FormInput
+          type="text"
+          name="displayName"
+          value={displayName}
+          onChange={handleChange}
+          label="Display Name"
+          required
+        />
+        <FormInput
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          label="Email"
+          required
+        />
+        <FormInput
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          label="Password"
+          required
+        />
+        <FormInput
+          type="password"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={handleChange}
+          label="Confirm Password"
+          required
+        />
+        <CustomButton type="submit">SIGN UP</CustomButton>
+        <CustomButton type="button" onClick={signInWithGoogle} isGoogleSIgnIn>
+          GOOGLE SIGN IN
+        </CustomButton>
+      </form>
+      <div className="acct" to="/signin">
+        Already have an account?
+        <span className="acctSignIn" onClick={() => dispatch(displaySignup())}>
+          SIGN IN
+        </span>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default SignUp;
