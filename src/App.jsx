@@ -11,6 +11,7 @@ import { HomePage } from "./pages/homepage/homepage";
 import { ShopPage } from "./component/shop/shopPage";
 import { Header } from "./component/header/header";
 import { SignInAndSignUpPage } from "./component/signin-signup/signin-signup";
+import { CheckoutPage } from "./component/checkout/checkout";
 
 //IMPORTS FROM FIREBASE
 import { onSnapshot } from "firebase/firestore";
@@ -25,6 +26,9 @@ import { setCurrentUser } from "./redux/user/userAction";
 //IMPORT NOTISTACK
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
+//IMPORT SELECTOR
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "./redux/user/userSelector";
 ///////////////////////////////////////////
 
 class App extends Component {
@@ -89,6 +93,7 @@ class App extends Component {
               currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />
             }
           />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
         <SnackbarProvider />
       </div>
@@ -96,11 +101,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.user.currentUser,
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });

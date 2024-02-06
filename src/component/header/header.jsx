@@ -17,9 +17,13 @@ import { useSelector } from "react-redux";
 //IMPORT TOAST
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
+//IMPORT CARTSELECTOR
+import { selectCartHidden } from "../../redux/cart/cartSelectors";
+import {selectCurrentUser} from "../../redux/user/userSelector"
+
 export const Header = () => {
-  const { currentUser } = useSelector((state) => state.user);
-  const cart = useSelector((state) => state.cart);
+  const currentUser  = useSelector((state) => selectCurrentUser(state));
+  const hidden = useSelector((state) => selectCartHidden(state));
 
   //Notifications
 
@@ -67,7 +71,7 @@ export const Header = () => {
         <CartIcon />
         <SnackbarProvider />
       </div>
-      {cart.hidden ? null : <CartDropdown />}
+      {hidden ? null : <CartDropdown />}
     </div>
   );
 };

@@ -5,9 +5,12 @@ import { SignUp } from "../sign-up/sign-up";
 
 import { useSelector } from "react-redux";
 
-export const SignInAndSignUpPage = () => {
-  const displaySignup = useSelector((state) => state.sign.displaySignup);
+import { selectSignItems } from "../../redux/signin/signSelector";
 
+export const SignInAndSignUpPage = () => {
+  const displaySignup = useSelector((state) => selectSignItems(state));
+
+  () => console.log("this is", displaySignup);
   return (
     <div className="sign-in-and-sign-up">
       {displaySignup ? <SignUp /> : <SignIn />}
