@@ -19,10 +19,10 @@ import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 //IMPORT CARTSELECTOR
 import { selectCartHidden } from "../../redux/cart/cartSelectors";
-import {selectCurrentUser} from "../../redux/user/userSelector"
+import { selectCurrentUser } from "../../redux/user/userSelector";
 
 export const Header = () => {
-  const currentUser  = useSelector((state) => selectCurrentUser(state));
+  const currentUser = useSelector((state) => selectCurrentUser(state));
   const hidden = useSelector((state) => selectCartHidden(state));
 
   //Notifications

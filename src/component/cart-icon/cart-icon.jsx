@@ -13,7 +13,6 @@ export const CartIcon = () => {
   };
 
   const noOfItems = useSelector((state) => selectCartItemsCount(state));
-  console.log(noOfItems);
 
   return (
     <div className="cart-icon" onClick={handleCartIconClick}>
