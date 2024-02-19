@@ -75,3 +75,26 @@
     }
   }
 }
+
+.stripeButton {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgb(145, 95, 191);
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgb(155, 65, 239);
+  }
+}
+
+.stripeForm {
+  width: 200px; /* Adjust width as needed */
+  height: 150px; /* Adjust height as needed */
+  background-color: white; /* Set background color */
+  border-radius: 10px; /* Add border-radius for rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Apply box shadow for the pop-out effect */
+  transform: translateZ(0); /* Improve performance on some browsers */
+  transition: box-shadow 0.3s ease-in-out; /* Add a smooth transition effect */
+}
