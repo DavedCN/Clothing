@@ -2,9 +2,7 @@ import React from "react";
 
 import { CustomButton } from "../custom-button/custom-button";
 
-// import { CartItem } from "../cartitem/cartitem.jsx";
-
-import CartItem from "../cartitem/cartitem.jsx";
+import { CartItem } from "../cartItem/cartItem.jsx";
 
 import { useSelector, useDispatch } from "react-redux";
 
