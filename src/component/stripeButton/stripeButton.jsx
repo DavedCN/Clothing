@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
-import { CheckoutForm } from "./CheckoutForm";
+import { CheckoutForm } from "./checkoutForm.jsx";
 import { loadStripe } from "@stripe/stripe-js";
 
 export const StripeCheckoutButton = () => {
