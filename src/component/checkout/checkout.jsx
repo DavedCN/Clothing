@@ -7,6 +7,7 @@ import {
 import { useSelector } from "react-redux";
 
 import { CheckoutItem } from "../checkoutItem/checkoutItem";
+import { StripeCheckoutButton } from "../stripeButton/stripeButton";
 
 export const CheckoutPage = () => {
   const cartItems = useSelector(selectCartItems);
@@ -37,6 +38,7 @@ export const CheckoutPage = () => {
       <div className="total">
         <span>{cartItems.length ? `TOTAL : $ ${total}` : ""}</span>
       </div>
+      {cartItems.length ? <StripeCheckoutButton price={total} /> : ""}
     </div>
   );
 };
