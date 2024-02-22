@@ -3,18 +3,23 @@ import { Routes, Route } from "react-router-dom";
 import { CollectionsOverview } from "../collectionsOverView/collectionsOverView";
 import { CollectionPage } from "../../pages/collection/collection";
 import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase/firebase.utils";
+import {
+  convertCollectionsSnapshotToMap,
+  db,
+} from "../../firebase/firebase.utils";
 
 //DATA FROM FIREBASE
 
 export const ShopPage = () => {
-  unsubcribeFromSnapshot = null;
+  // unsubcribeFromSnapshot = null;
 
   useEffect(() => {
     const collectionRef = collection(db, "collections");
 
+    console.log("Coll Ref:", collectionRef);
+
     onSnapshot(collectionRef, async (snapShot) => {
-      console.log(snapShot);
+      convertCollectionsSnapshotToMap(snapShot);
     });
   }, []);
   return (

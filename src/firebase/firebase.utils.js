@@ -97,8 +97,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const snapShot = await getDoc(userRef);
   const collectionSnapshot = await getDocs(collectionRef);
 
- 
-
   if (!snapShot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -114,19 +112,37 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-// export const addCollectionAndDocuments = async (
-//   collectionKey,
-//   objectsToAdd
-// ) => {
-//   const collectionRef = collection(db, collectionKey);
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
 
-//   const batch = writeBatch(db);
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items,
+    };
+  });
 
-//   objectsToAdd.forEach((object) => {
-//     const newDocRef = doc(collectionRef);
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
 
-//     batch.set(newDocRef, object);
-//   });
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey);
 
-//   return await batch.commit(); //.then(() => console.log("done"));
-// };
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const newDocRef = doc(collectionRef);
+
+    batch.set(newDocRef, object);
+  });
+
+  return await batch.commit(); //.then(() => console.log("done"));
+};
