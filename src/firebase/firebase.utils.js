@@ -78,11 +78,11 @@ export const createWithEmailAndPassword = async (
 
 // STORAGE USING FIREBASE FIRESTORE
 
-import { getFirestore } from "firebase/firestore";
-import { getDoc, doc, setDoc } from "firebase/firestore";
+import { getFirestore, getDocs, writeBatch, addDoc } from "firebase/firestore";
+import { getDoc, doc, setDoc, collection } from "firebase/firestore";
 
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 // GOOGLE AUTHENTICATION STORAGE
 
@@ -90,8 +90,14 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
   const userRef = doc(db, "users", userAuth.uid);
+  const collectionRef = collection(db, "users");
+
+  console.log(collectionRef);
 
   const snapShot = await getDoc(userRef);
+  const collectionSnapshot = await getDocs(collectionRef);
+
+ 
 
   if (!snapShot.exists()) {
     const { displayName, email } = userAuth;
@@ -107,3 +113,20 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   return userRef;
 };
+
+// export const addCollectionAndDocuments = async (
+//   collectionKey,
+//   objectsToAdd
+// ) => {
+//   const collectionRef = collection(db, collectionKey);
+
+//   const batch = writeBatch(db);
+
+//   objectsToAdd.forEach((object) => {
+//     const newDocRef = doc(collectionRef);
+
+//     batch.set(newDocRef, object);
+//   });
+
+//   return await batch.commit(); //.then(() => console.log("done"));
+// };

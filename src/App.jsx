@@ -32,12 +32,11 @@ import { selectCurrentUser } from "./redux/user/userSelector";
 ///////////////////////////////////////////
 
 
-
 class App extends Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, collectionsArray } = this.props;
 
     //Notifications
 
@@ -68,6 +67,7 @@ class App extends Component {
           };
 
           setCurrentUser(userData);
+       
           signinNotify(userData);
         });
       } else {
@@ -105,6 +105,7 @@ class App extends Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
+ 
 });
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
